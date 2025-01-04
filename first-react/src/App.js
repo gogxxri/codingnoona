@@ -1,64 +1,72 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import Box from './components/Box';
+import rockImg from './assets/imgs/rock.png';
+import scissorsImg from './assets/imgs/scissors.png';
+import paperImg from './assets/imgs/paper.png';
 
 function App() {
-  const [youState, setYouState] = useState(0);
-  const [computerState, setComputerState] = useState(0);
-  const [youWin, setYouWin] = useState('비김');
-  const [computerWin, setComputerWin] = useState('비김');
+  const [userSelect, setUserSelect] = useState(null);
+  const [computerSelect, setComputerSelect] = useState(null);
+  const [result, setResult] = useState('');
 
-  const clickHandler = you => {
-    setYouState(you);
-    setComputerState(parseInt(Math.random() * 3));
+  const choice = {
+    rock: {
+      name: 'rock',
+      img: rockImg,
+    },
+    scissors: {
+      name: 'scissors',
+      img: scissorsImg,
+    },
+    paper: {
+      name: 'paper',
+      img: paperImg,
+    },
+  };
+  const play = userChoice => {
+    const userSelection = choice[userChoice];
+    setUserSelect(userSelection);
+
+    let computerChoice = randomChoice();
+    setComputerSelect(computerChoice);
+
+    setResult(judgment(userSelection, computerChoice));
   };
 
-  useEffect(() => {
-    switch (true) {
-      case youState === computerState:
-        setYouWin('SAME!');
-        setComputerWin('SAME!');
-        break;
-      case youState === 0 && computerState === 1:
-      case youState === 1 && computerState === 2:
-      case youState === 2 && computerState === 0:
-        setYouWin('WIN!');
-        setComputerWin('LOSE');
-        break;
-      default:
-        setYouWin('LOSE');
-        setComputerWin('WIN!');
+  const randomChoice = () => {
+    let itemArray = Object.keys(choice); // 객체의 키값만 뽑아서 array로 바꿈
+    let randomItem = parseInt(Math.random() * 3);
+    let final = itemArray[randomItem];
+    return choice[final];
+  };
+
+  const judgment = (user, computer) => {
+    if (!user || !computer) {
+      return '버튼을 눌러보세요!';
     }
-  }, [youState, computerState]);
+    switch (true) {
+      case user.name === computer.name:
+        return 'tie';
+      case user.name === 'rock' && computer.name === 'scissors':
+      case user.name === 'paper' && computer.name === 'rock':
+      case user.name === 'scissors' && computer.name === 'paper':
+        return 'win';
+      default:
+        return 'lose';
+    }
+  };
 
   return (
     <div className="container">
-      <div className="title">가위 바위 보!</div>
       <div className="boxWrap">
-        <div className="box">
-          <div>
-            <p className="who">you</p>
-            <div className="handBox">
-              <div>{youState === 0 ? '👊' : youState === 1 ? '✌' : '✋'}</div>
-            </div>
-            <div className="winBox">
-              <p className={youWin === 'WIN!' ? 'win' : youWin === 'LOSE' ? 'lose' : 'same'}>{youWin}</p>
-            </div>
-          </div>
-        </div>
-        <div className="box">
-          <p className="who">computer</p>
-          <div className="handBox">
-            <div>{computerState === 0 ? '👊' : computerState === 1 ? '✌' : '✋'}</div>
-          </div>
-          <div className="winBox">
-            <p className={computerWin === 'WIN!' ? 'win' : computerWin === 'LOSE' ? 'lose' : 'same'}>{computerWin}</p>
-          </div>
-        </div>
+        <Box title="You" item={userSelect} result={result} />
+        <Box title="Computer" item={computerSelect} result={result} />
       </div>
-      <div className="selectBox">
-        <div onClick={() => clickHandler(0)}>👊</div>
-        <div onClick={() => clickHandler(1)}>✌</div>
-        <div onClick={() => clickHandler(2)}>✋</div>
+      <div className="btnWrap">
+        <button onClick={() => play('rock')}>👊</button>
+        <button onClick={() => play('scissors')}>✌</button>
+        <button onClick={() => play('paper')}>✋</button>
       </div>
     </div>
   );

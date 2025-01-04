@@ -1,57 +1,50 @@
-.container{
-  text-align: center;
-  padding :50px;
-}
-.title {
-  font-size: 50px;
-  padding : 30px 0;
-}
-.who {
-  font-size: 30px;
-}
-.boxWrap {
-  display: flex;
-  flex-direction : row;
-  width: 100%;
-  height: 400px;
-  justify-content: center;
-  gap : 20px;
-  align-items: center;
+.boxWrap{
+    display:flex;
+    justify-content: center;
+    gap : 20px;
 }
 .box {
-  border:2px solid black;
-  width : 400px
+    border : 1px #000000 solid;
+    width : 500px;
+    display : flex;
+    flex-direction : column;
+    justify-content: center;
+    align-items: center;
 }
 
-.handBox{
-  font-size: 80px;
+.box img {
+    height : 200px;
 }
 
-.winBox{
-  padding: 20px;
-  font-size: 30px;
-  font-weight : 700;
+.btnWrap {
+    padding :20px;
+    display: flex;
+    justify-content: center;
 }
 
-.selectBox {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  font-size: 40px;
-  gap : 20px;
-  padding : 30px 0;
+.box > p {
+    font-size : 30px;
+    font-weight: 700;
 }
-.selectBox > div {
-  cursor: pointer;
+
+.btnWrap > button {
+    font-size :50px;
+    margin : 0 20px;
+    cursor : pointer;
+    background-color : transparent;
+    border: none;
 }
+
 .win {
-  color : #4141d2;
+    border : 10px solid green;
+    color : green;
 }
 
 .lose {
-  color : #ff1a1a;
+    border : 10px solid red;
+    color : red;
 }
-
-.same {
-  color : green;
+.tie {
+    border : 10px blue solid;
+    color : blue;
 }
