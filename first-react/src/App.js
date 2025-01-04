@@ -1,13 +1,18 @@
+import React, { useState } from 'react';
 import './App.css';
-import Box from  "./components/Box"
 
 function App() {
+  const [counter, setCounter] = useState(0);
+
+  const increase = () => {
+    setCounter(counter + 1); // 비동기적 작동
+  };
+
   return (
-      <div>
-          <Box name="규리" num="1"/>
-          <Box name="정훈" num="2"/>
-          <Box name="수혁" num="3"/>
-      </div>
+    <div>
+      <div>{counter}</div>
+      <button onClick={increase}>click!</button>
+    </div>
   );
 }
 
